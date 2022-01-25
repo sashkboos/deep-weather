@@ -374,7 +374,7 @@ class resnet2d_simple(LightningModule):
         logger.debug("Processing validation batch %s", batch_idx)
         x, y = batch
         out = self(x)
-        loss = torch.nn.MSELoss()(out, y)  # self.loss_fct(out, y)
+        loss = torch.sqrt(torch.nn.MSELoss()(out, y))  # self.loss_fct(out, y)
         self.log(
             "val_loss",
             loss,
@@ -389,7 +389,7 @@ class resnet2d_simple(LightningModule):
         logger.debug("Processing test batch %s", batch_idx)
         x, y = batch
         out = self(x)
-        loss = torch.nn.MSELoss()(out, y)
+        loss = torch.sqrt(torch.nn.MSELoss()(out, y))
         self.log(
             "test_loss",
             loss,
