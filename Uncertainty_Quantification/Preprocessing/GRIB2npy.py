@@ -15,7 +15,10 @@ PARAMCODE = "130.128" # Parameters predicted
 params = ['130.128','133.128','135.128','131.128','132.128','129.128','155.128'] # Parameters used
 used_pert = [1,2,3,4,5] # Perturbations used for the prediction
 total_pert = [1,2,3,4,5,6,7,8,9,10] # Perturbations that the prediction will be compared against
-used_plvl = [500,850] # Pressure levels that are used in hPa
+
+used_plvl = [500, 850, 925, 1000, 700] # Pressure levels that are used in hPa (we set the 700 at the end in order not to change the indices of 500/850)
+# all plvls: array([  10.,   50.,  100.,  200.,  300.,  400.,  500.,  700.,  850., 925., 1000.])
+
 ## Code for the GRIB parameters if available
 # 248.128 = fraction cloud cover
 # 157.128 = relative humidity
