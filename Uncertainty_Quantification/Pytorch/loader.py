@@ -40,10 +40,10 @@ class WeatherDataset(Dataset):
             for i in data_list
             if any(j in i for j in pat_y)
         ]
-        self.means = np.load(os.path.join(args.std_folder, "means.npy")).astype(
+        self.means = np.load(os.path.join(args.std_folder, "means_5plv.npy")).astype(
             np.float32
         )
-        self.stddevs = np.load(os.path.join(args.std_folder, "stddevs.npy")).astype(
+        self.stddevs = np.load(os.path.join(args.std_folder, "stddevs_5plv.npy")).astype(
             np.float32
         )
         self.means = self.means[
