@@ -84,8 +84,15 @@ def main():
     parser.add_argument(
         "--plvl_used",
         nargs="+",
-        default=1,
+        type=int,
+        default=[1],
         help="if --dims is 2, which pressure level are we predicting (index)",
+    )
+    parser.add_argument(
+        "--pred_plvl_used",
+        type=int,
+        default= 1,
+        help="predicting pressure level (for not it is only one pressure level)",
     )
     parser.add_argument(
         "--time_steps",
@@ -201,7 +208,8 @@ def main():
             max_lr=args.max_lr,
             in_channels=len(args.parameters)
             * len(args.time_steps)
-            * 2,  # 2 because we use either the mean or the std + the unperturbed trajectory as input
+            * 2
+            * len(args.plvl_used),  # 2 because we use either the mean or the std + the unperturbed trajectory as input
             out_channels=1,  # output temperature only
             args=args,
         )

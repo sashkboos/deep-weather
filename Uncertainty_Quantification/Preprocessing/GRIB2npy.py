@@ -37,7 +37,7 @@ def calc(i):
     Nhours = 105
     assert Nhours == len(file_indexes)
     Nparam = len(params)
-    Nheight = 2
+    Nheight = len(used_plvl)
     Nlatitude = 361
     Nlongitude = 720
     npx = np.empty([3, len(used_pert), Nparam, Nheight, Nlatitude, Nlongitude],dtype='float32')

@@ -62,9 +62,10 @@ class WeatherDataset(Dataset):
             : self.args.max_lat,
             : self.args.max_lon,
         ]
-        if args.dims == 2:
-            self.stddevs = self.stddevs[:, args.plvl_used, :, :]
-            self.means = self.means[:, args.plvl_used, :, :]
+        # if args.dims == 2:
+        #     print('args.plvl_used: ', args.plvl_used)
+            # self.stddevs = self.stddevs[:, args.plvl_used, :, :]
+            # self.means = self.means[:, args.plvl_used, :, :]
         self.datalist_x.sort()
         self.datalist_y.sort()
 

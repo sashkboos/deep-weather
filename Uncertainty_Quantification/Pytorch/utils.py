@@ -25,7 +25,7 @@ def reduce_sample_y(data_y, args):
     ind = 1 if args.aggr_type == "Mean" else 0
     if args.dims == 2:
         data_y = data_y[
-            ind, None, args.parameters.index(args.pred_type), args.plvl_used, :, :
+            ind, None, args.parameters.index(args.pred_type), args.pred_plvl_used, :, :
         ]
     else:
         data_y = data_y[ind, None, args.parameters.index(args.pred_type), :, :, :]
@@ -52,19 +52,25 @@ def reduce_sample_x(
     # For now plvl used only works with 2d data, can be scaled to be able to select 3d data later if needed
     # crop to work with 5 pooling operations
     data_x = data_x[:, :, :, :, : args.max_lat, : args.max_lon]
+
     op = np.mean if args.aggr_type == "Mean" else np.std
-    stdized = (data_x[:, 0, None, :, :, :, :] - means) / stddevs
-    data_x = np.concatenate([op(data_x, axis=1, keepdims=True), stdized], axis=1)
+    stdized = (data_x[:, 0, None, :, :, :, :] - means) / stddevs #We standardize trajectory 0
+    data_x = np.concatenate([op(data_x, axis=1, keepdims=True), stdized], axis=1) # concatenate  trajectory-0 with
+    # spreads
+
     if args.dims == 2:
+
         data_x = data_x[:, :, :, args.plvl_used, :, :]
+
         data_x = np.reshape(
             data_x,
             [
-                data_x.shape[0] * data_x.shape[1] * data_x.shape[2],
-                data_x.shape[3],
+                data_x.shape[0] * data_x.shape[1] * data_x.shape[2] * data_x.shape[3],
                 data_x.shape[4],
+                data_x.shape[5],
             ],
         )
+
     else:
         data_x = np.reshape(
             data_x,
