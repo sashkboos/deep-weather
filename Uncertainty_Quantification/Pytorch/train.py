@@ -3,6 +3,7 @@ import loader
 import random
 from models import unet3d, resnet2d_simple
 from pytorch_lightning import Trainer
+from datetime import datetime
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
 YEARS = [str(i) for i in range(1999, 2018)]
@@ -217,8 +218,10 @@ def main():
     # --min_epochs 1 --max_epochs 30 --gpus 2 --accelerator ddp --accumulate_grad_batches 1 --resume_from_checkpoint None
     trainer = Trainer.from_argparse_args(args)
 
+    start = datetime.now()
     dm = loader.WDatamodule(args, year_dict=year_dict)
     dm.setup(args)
+    print('Data Loading time (s): ', (datetime.now() - start).seconds)
 
     trainer.fit(model, dm.train, dm.val)
 
